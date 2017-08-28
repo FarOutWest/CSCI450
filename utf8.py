@@ -2,10 +2,13 @@
 import sys
 import unicodedata
 
+for i in range(0,55):
+    print('-', end='')
 print('')
-print('-------------------------------------------------------------')
 print("Unicodedata Decryption")
-print('-------------------------------------------------------------')
+for i in range(0,55):
+    print('-', end='')
+print('')
 
 chars = open('chars.txt', 'r')
 w = chars.read()
@@ -13,11 +16,14 @@ w = w[:-1]
 print('chars.txt: ', w)
 chars.close()
 
-print('-------------------------------------------------------------')
+for i in range(0,55):
+    print('-', end='')
+print('')
 
 for i, c in enumerate(w):   #(chars.read()): #(u):
     print(i, '%04x' % ord(c), unicodedata.category(c), end = " ")
     print(unicodedata.name(c))
 
-print('-------------------------------------------------------------')
+for i in range(0,55):
+    print('-', end='')
 print('')
