@@ -1,0 +1,4 @@
+This file contains a website that has the description for the two char unicode
+char categories.
+
+http://www.fileformat.info/info/unicode/category/index.htm
