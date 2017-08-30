@@ -20,7 +20,7 @@ for i in range(0, 55):
     print('-', end='')
 print('')
 
-for i, c in enumerate(w):  # (chars.read()): #(u):
+for i, c in enumerate(w): 
     print(i, ord(c), unicodedata.category(c), end=' ')
     print(unicodedata.name(c))
 
