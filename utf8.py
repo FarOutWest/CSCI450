@@ -21,7 +21,7 @@ for i in range(0, 55):
 print('')
 
 for i, c in enumerate(w):  # (chars.read()): #(u):
-    print(i, '%08x' % ord(c), unicodedata.category(c), end=' ')
+    print(i, ord(c), unicodedata.category(c), end=' ')
     print(unicodedata.name(c))
 
 for i in range(0, 55):
