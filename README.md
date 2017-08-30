@@ -1,2 +1,4 @@
 # CSCI450
-Compiler Structure 
+Compiler Structure
+
+This converts a unicode char into its decimal value 
