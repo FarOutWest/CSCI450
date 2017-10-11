@@ -1,0 +1,161 @@
+%{
+
+#include <iostream>
+#include <stdio.h>
+#include <string.h>
+#include "cliser.hpp"
+#include "generator.hpp"
+
+#define DEBUG_PARSER 1
+
+  int yywrap();
+  int yylex();
+  void yyerror(const char *str);
+
+  NodePtr program(0);
+
+%}
+
+%token NUMBER FACETNORMAL ENDFACET OUTERLOOP ENDLOOP VERTEX WS EOL
+
+%%
+program :
+commands
+{
+#if DEBUG_PARSER == 1
+  std::cout << "program : commands=" << $1 << std::endl;
+#endif
+  program = $1;
+}
+; /* program */
+
+commands :
+/* empty */
+{
+#if DEBUG_PARSER == 1
+  std::cout << "commands: empty" << std::endl;
+#endif
+  $$ = NodePtr(new ProgramNode());
+}
+|
+commands command
+{
+#if DEBUG_PARSER == 1
+  std::cout << "commands: commands=" << $1 << "command=" << $2 << std::endl;
+#endif
+  $$=$1;
+  $$->children.push_back($2);
+}
+; /* commands */
+
+command :
+facet_command
+{
+#if DEBUG_PARSER == 1
+  std::cout << "command: facet_command=" << $1 << std::endl;
+#endif
+  $$ = $1;
+}
+|
+endfacet_command
+{
+#if DEBUG_PARSER == 1
+  std::cout << "command: endfacet_command=" << $1 << std::endl;
+#endif
+  $$ = $1;
+}
+; /* command */
+
+command :
+outerloop_command
+{
+#if DEBUG_PARSER == 1
+  std::cout << "command: outerloop_command=" << $1 << std::endl;
+#endif
+  $$ = $1;
+}
+|
+endloop_command
+{
+#if DEBUG_PARSER == 1
+  std::cout << "command: endloop_command=" << $1 << std::endl;
+#endif
+  $$ = $1;
+}
+; /* command */
+
+facet_command :
+optional_ws FACETNORMAL WS NUMBER WS NUMBER WS NUMBER optional_ws EOL
+{
+#if DEBUG_PARSER == 1
+  std::cout << "facet_command: NUMBER = " << $4 << " NUMBER = " << $6 << " NUMBER = " << $8 << std::endl;
+#endif
+  $$ = NodePtr(new FacetCommandNode($4,$6,$8));
+}
+; /* facet_command */
+
+outerloop_command :
+optional_ws VERTEX WS NUMBER WS NUMBER WS NUMBER optional_ws EOL optional_ws VERTEX WS NUMBER WS NUMBER WS NUMBER optional_ws EOL optional_ws VERTEX WS NUMBER WS NUMBER WS NUMBER optional_ws EOL
+{
+#if DEBUG_PARSER == 1
+  std::cout << "outerloop_command: NUMBER = " << $4 << " NUMBER = " << $6
+  << " NUMBER = " << $8 << " NUMBER = " << $12 << " NUMBER = " << $14 << " NUMBER = "
+  << $16 << " NUMBER = " << $20 << " NUMBER = " << $22 << " NUMBER = " << $24 << std::endl;
+#endif
+  $$ = NodePtr(new OuterloopCommandNode($4,$6,$8));
+}
+; /* facet_command */
+
+endloop_command :
+optional_ws ENDLOOP optional_ws EOL
+{
+#if DEBUG_PARSER == 1
+  std::cout << "endloop_command: WORD = " << $2 << std::endl;
+#endif
+  $$ = NodePtr(new EndloopCommandNode($2));
+}
+; /* endloop_command */
+
+endfacet_command :
+optional_ws ENDFACET optional_ws EOL
+{
+#if DEBUG_PARSER == 1
+  std::cout << "endfacet_command: WORD = " << $2 << std::endl;
+#endif
+  $$ = NodePtr(new EndfacetCommandNode($2));
+}
+; /* endfacet_command */
+
+optional_ws :
+/* empty */
+|
+WS
+; /* optional_ws */
+
+%%
+
+int yywrap()
+{
+  return 1;
+}
+
+void yyerror(const char *str)
+{
+  fprintf(stderr,"error: %s\n",str);
+}
+
+int main(int argc, char *argv[])
+{
+  yyparse();
+  if (!! program) {
+    program->print(std::cout);
+
+    GeneratorPtr gen = generator(program);
+
+    gen->generate(std::cout);
+
+  } else {
+    std::cout << "syntax error." << std::endl;
+  }
+  return 0;
+}
