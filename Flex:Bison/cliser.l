@@ -5,8 +5,8 @@
 #include <assert.h>
 #include <string.h>
 #include <map>
-#include "example1.hpp"
-#include "example1.tab.hpp"
+#include "cliser.hpp"
+#include "cliser.tab.hpp"
 
 #define DEBUG_LEXER 1
 %}

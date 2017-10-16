@@ -8,8 +8,10 @@
 class Node {
 public: enum {
     PROGRAM,
-    START_COMMAND,
-    STOP_COMMAND,
+    FACET_COMMAND,
+    OUTERLOOP_COMMAND,
+    ENDFACET_COMMAND,
+    ENDLOOP_COMMAND,
     WORD_LITERAL,
     NUMBER_LITERAL
   };
@@ -34,27 +36,27 @@ class NumberNode : public Node {
 public: int number;
 public: NumberNode(int _number);
 public: int type() const;
-public: void print(std::ostream &out) const;  
+public: void print(std::ostream &out) const;
 };
 
 typedef std::shared_ptr < NumberNode > NumberNodePtr;
 
 
-class StartCommandNode : public Node {
-public: StartCommandNode(const NodePtr &target, const NodePtr &power);
+class FacetCommandNode : public Node {
+public: FacetCommandNode(const NodePtr &planea, const NodePtr &planeb, const NodePtr &planec);
 public: int type() const;
-public: void print(std::ostream &out) const;  
+public: void print(std::ostream &out) const;
 
-public: const std::string & target() const;
+public: int planea() const;
+public: int planeb() const;
+public: int planec() const;
 
-public: int power() const;
-  
 };
 
-typedef std::shared_ptr < StartCommandNode > StartCommandNodePtr;
+typedef std::shared_ptr < FacetCommandNode > FacetCommandNodePtr;
 
-class StopCommandNode : public Node {
-public: StopCommandNode(const NodePtr &target);
+class EndfacetCommandNode : public Node {
+public: EndfacetCommandNode(const NodePtr &target);
 public: int type() const;
 public: void print(std::ostream &out) const;
 
@@ -62,11 +64,35 @@ public: const std::string & target() const;
 
 };
 
-typedef std::shared_ptr < StopCommandNode > StopCommandNodePtr;
+typedef std::shared_ptr < EndfacetCommandNode > EndfacetCommandNodePtr;
+
+class OuterloopCommandNode : public Node {
+public: OuterloopCommandNode(const NodePtr &vertexa, const NodePtr &vertexb, const NodePtr &vertexc);
+public: int type() const;
+public: void print(std::ostream &out) const;
+
+public: int vertexa() const;
+public: int vertexb() const;
+public: int vertexc() const;
+
+};
+
+typedef std::shared_ptr < OuterloopCommandNode > OtuerloopCommandNodePtr;
+
+class EndloopCommandNode : public Node {
+public: EndloopCommandNode(const NodePtr &target);
+public: int type() const;
+public: void print(std::ostream &out) const;
+
+public: const std::string & target() const;
+
+};
+
+typedef std::shared_ptr < EndloopCommandNode > EndloopCommandNodePtr;
 
 class ProgramNode : public Node {
 public: int type() const;
-public: void print(std::ostream &out) const;  
+public: void print(std::ostream &out) const;
 };
 
 typedef std::shared_ptr < ProgramNode > ProgramNodePtr;

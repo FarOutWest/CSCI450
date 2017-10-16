@@ -26,49 +26,61 @@ void NumberNode::print(std::ostream &out) const {
   out << "number(" << number << ")";
 }
 
-FacetCommandNode::StartCommandNode(const NodePtr &target, const NodePtr &power) {
-  children.push_back(target);
-  children.push_back(power);
+FacetCommandNode::FacetCommandNode(const NodePtr &planea, const NodePtr &planeb, const NodePtr &planec) {
+  children.push_back(planea);
+  children.push_back(planeb);
+  children.push_back(planec);
 }
 
-int FacetCommandNode::type() const { return START_COMMAND; }
+int FacetCommandNode::type() const { return FACET_COMMAND; }
 void FacetCommandNode::print(std::ostream &out) const {
-  out << "facet(target=" << children.at(0)
-      << ", power=" << children.at(1) << ")";
+  out << "facet(planea=" << children.at(0)
+      << ", planec=" << children.at(1)
+      << ", planeb=" << children.at(2) << ")";
 }
 
-const std::string & FacetCommandNode::target() const {
-  return std::dynamic_pointer_cast<WordNode>(children.at(0))->word;
+int FacetCommandNode::planea() const {
+  return std::dynamic_pointer_cast<NumberNode>(children.at(0))->number;
 }
 
-int FacetCommandNode::power() const {
+int FacetCommandNode::planeb() const {
   return std::dynamic_pointer_cast<NumberNode>(children.at(1))->number;
 }
 
-OuterloopCommandNode::StartCommandNode(const NodePtr &target, const NodePtr &power) {
-  children.push_back(target);
-  children.push_back(power);
+int FacetCommandNode::planec() const {
+  return std::dynamic_pointer_cast<NumberNode>(children.at(2))->number;
 }
 
-int OuterloopCommandNode::type() const { return START_COMMAND; }
+OuterloopCommandNode::OuterloopCommandNode(const NodePtr &vertexa, const NodePtr &vertexb, const NodePtr &vertexc) {
+  children.push_back(vertexa);
+  children.push_back(vertexb);
+  children.push_back(vertexc);
+}
+
+int OuterloopCommandNode::type() const { return OUTERLOOP_COMMAND; }
 void OuterloopCommandNode::print(std::ostream &out) const {
-  out << "facet(target=" << children.at(0)
-      << ", power=" << children.at(1) << ")";
+  out << "facet(vertexa=" << children.at(0)
+      << ", vertexb=" << children.at(1)
+      << ", vertexc=" << children.at(2) << ")";
 }
 
-const std::string & OuterloopCommandNode::target() const {
-  return std::dynamic_pointer_cast<WordNode>(children.at(0))->word;
+int OuterloopCommandNode::vertexa() const {
+  return std::dynamic_pointer_cast<NumberNode>(children.at(0))->number;
 }
 
-int OuterloopCommandNode::power() const {
+int OuterloopCommandNode::vertexb() const {
   return std::dynamic_pointer_cast<NumberNode>(children.at(1))->number;
 }
 
-EndloopCommandNode::StopCommandNode(const NodePtr &target) {
+int OuterloopCommandNode::vertexc() const {
+  return std::dynamic_pointer_cast<NumberNode>(children.at(2))->number;
+}
+
+EndloopCommandNode::EndloopCommandNode(const NodePtr &target) {
   children.push_back(target);
 }
 
-int EndloopCommandNode::type() const { return STOP_COMMAND; }
+int EndloopCommandNode::type() const { return ENDLOOP_COMMAND; }
 void EndloopCommandNode::print(std::ostream &out) const {
   out << "stop(target=" << children.at(0) << ")";
 }
@@ -77,11 +89,11 @@ const std::string & EndloopCommandNode::target() const {
   return std::dynamic_pointer_cast<WordNode>(children.at(0))->word;
 }
 
-EndfacetCommandNode::StopCommandNode(const NodePtr &target) {
+EndfacetCommandNode::EndfacetCommandNode(const NodePtr &target) {
   children.push_back(target);
 }
 
-int EndfacetCommandNode::type() const { return STOP_COMMAND; }
+int EndfacetCommandNode::type() const { return ENDFACET_COMMAND; }
 void EndfacetCommandNode::print(std::ostream &out) const {
   out << "stop(target=" << children.at(0) << ")";
 }
