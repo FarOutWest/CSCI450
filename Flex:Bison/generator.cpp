@@ -40,16 +40,16 @@ struct SetupGenerator : public Generator {
     setup(ast,out);
     out << "}" << std::endl;
   }
-    
+
   void setup(const NodePtr &ast, std::ostream &out) {
     switch(ast->type()) {
-    case Node::START_COMMAND: {
-      StartCommandNodePtr start = std::dynamic_pointer_cast<StartCommandNode>(ast);
-      out << "  " << start->target() << "." << "level(" << start->power() << ");" << std::endl;
+    case Node::FACET_COMMAND: {
+      FacetCommandNodePtr start = std::dynamic_pointer_cast<FacetCommandNode>(ast);
+      out << "  " << start->planea() << "." << "level(" << start->planeb() << "." << "level(" << start->planec() << ");" << std::endl;
       break;
     } // start case
-    case Node::STOP_COMMAND: {
-      StopCommandNodePtr stop = std::dynamic_pointer_cast<StopCommandNode>(ast);
+    case Node::ENDFACET_COMMAND: {
+      EndfacetCommandNodePtr stop = std::dynamic_pointer_cast<EndfacetCommandNode>(ast);
       out << "  " << stop->target() << "." << "disabled();" << std::endl;
       break;
     } // stop case
