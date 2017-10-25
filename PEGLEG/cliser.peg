@@ -1,1 +1,13 @@
-solid_description <-
+solid_description <- "solid "# {printf("%s\n");}
+
+facet_normal <- "facet normal"[0-9'.''e']+ {printf("%s\n");}
+
+outer_loop <- "outer loop" {printf("%s\n");}
+
+vertex <- "vertex"[0-9'.''e']+ {printf("%s\n");}
+
+end_loop <- "endloop" {printf("%s\n");}
+
+end_normal <- "endfacet" {printf("%s\n");}
+
+end_solid <- "endsolid"# {printf("%s\n");}
