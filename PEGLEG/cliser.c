@@ -381,7 +381,7 @@ YY_RULE(int) yy_end_loop(yycontext *yy)
 YY_RULE(int) yy_vertex(yycontext *yy)
 {  int yypos0= yy->__pos, yythunkpos0= yy->__thunkpos;
   yyprintf((stderr, "%s\n", "vertex"));  if (!yymatchString(yy, "vertex")) goto l4;  if (!yymatchClass(yy, (unsigned char *)"\000\000\000\000\200\100\377\003\000\000\000\000\040\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000")) goto l4;
-  l5:;
+  l5:;	
   {  int yypos6= yy->__pos, yythunkpos6= yy->__thunkpos;  if (!yymatchClass(yy, (unsigned char *)"\000\000\000\000\200\100\377\003\000\000\000\000\040\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000")) goto l6;  goto l5;
   l6:;	  yy->__pos= yypos6; yy->__thunkpos= yythunkpos6;
   }  yyDo(yy, yy_1_vertex, yy->__begin, yy->__end);
@@ -403,7 +403,7 @@ YY_RULE(int) yy_outer_loop(yycontext *yy)
 YY_RULE(int) yy_facet_normal(yycontext *yy)
 {  int yypos0= yy->__pos, yythunkpos0= yy->__thunkpos;
   yyprintf((stderr, "%s\n", "facet_normal"));  if (!yymatchString(yy, "facet normal")) goto l8;  if (!yymatchClass(yy, (unsigned char *)"\000\000\000\000\200\100\377\003\000\000\000\000\040\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000")) goto l8;
-  l9:;
+  l9:;	
   {  int yypos10= yy->__pos, yythunkpos10= yy->__thunkpos;  if (!yymatchClass(yy, (unsigned char *)"\000\000\000\000\200\100\377\003\000\000\000\000\040\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000\000")) goto l10;  goto l9;
   l10:;	  yy->__pos= yypos10; yy->__thunkpos= yythunkpos10;
   }  yyDo(yy, yy_1_facet_normal, yy->__begin, yy->__end);
