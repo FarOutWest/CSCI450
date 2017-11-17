@@ -1,6 +1,8 @@
 from sys import *
 import re
+import ast
 import cliserparse
+import cliserast
 import cliserlex
 import clisergenerator
 
@@ -12,15 +14,15 @@ dec_numbers = clisergenerator.dec_numbers
 def open_file(filename):
     f = open(filename, "r")
     STL_DESCRIPTION = f.readline()
-    data = f.readlines()
-    data = [x.strip(' ') for x in data]
-    data = [x.strip('\n') for x in data]
-    data = [x.split() for x in data]
-    return data
+    nodes = f.readlines()
+    nodes = [x.strip(' ') for x in nodes]
+    nodes = [x.strip('\n') for x in nodes]
+    nodes = [x.split() for x in nodes]
+    return nodes
 
 def run():
-    data = open_file(argv[1])
-    toks = cliserlex.lex(data)
+    nodes = open_file(argv[1])
+    toks = cliserlex.lex(nodes)
     cliserparse.parse(toks)
     clisergenerator.generate_slices()
 

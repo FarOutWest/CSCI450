@@ -1,15 +1,22 @@
-from mpl_toolkits.mplot3d import axes3d
+import numpy as np
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
+point  = np.array([1, 2, 3])
+normal = np.array([1, 1, 2])
 
-fig = plt.figure()
-ax = fig.add_subplot(111, projection='3d')
+# a plane is a*x+b*y+c*z+d=0
+# [a,b,c] is the normal. Thus, we have to calculate
+# d and we're set
+d = -point.dot(normal)
 
-# Grab some test data.
-X, Y, Z = axes3d.get_test_data(0.05)
-print("x,y,z: ",X,Y,Z)
+# create x,y
+xx, yy = np.meshgrid(range(10), range(10))
 
-# Plot a basic wireframe.
-ax.plot_wireframe(X, Y, Z, rstride=10, cstride=10)
+# calculate corresponding z
+z = (-normal[0] * xx - normal[1] * yy - d) * 1. /normal[2]
 
+# plot the surface
+plt3d = plt.figure().gca(projection='3d')
+plt3d.plot_surface(xx, yy, z)
 plt.show()

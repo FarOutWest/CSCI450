@@ -1,17 +1,30 @@
 from sys import *
 import re
+import numpy as np
 from mpl_toolkits.mplot3d import axes3d
 import matplotlib.pyplot as plt
+from matplotlib import cm
 import cliserlex
 
 numbers = cliserlex.numbers
 dec_numbers = []
 
-def plot(V1,V2,V3):
-    fig = plt.figure()
-    ax = fig.add_subplot(111, projection='3d')
-    # Plot a basic wireframe.
-    ax.plot_wireframe(V1, V2, V3, rstride=10, cstride=10)
+def plot(normals,vertexes):
+    V1 = vertexes[::3]
+    V2 = vertexes[1::3]
+    V3 = vertexes[2::3]
+
+    vert = 0
+    for vert in range(len(V1)):
+        tmp_plt1 = V1[vert]
+        tmp_plt2 = V2[vert]
+        tmp_plt3 = V3[vert]
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+        ax.plot_wireframe(tmp_plt1,tmp_plt2,tmp_plt3, rstride=10, cstride=10)
+        ax.set_xlabel('X')
+        ax.set_ylabel('Y')
+        ax.set_zlabel('Z')
     return plt
 
 def generate_slices():
@@ -72,14 +85,5 @@ def generate_slices():
     print(vertex_count,"Vertecies Found")
     print(normal_count,"Normals Found")
 
-    V1 = vertexes[::3]
-    V2 = vertexes[1::3]
-    V3 = vertexes[2::3]
-
-    vert = 0
-    for vert in range(len(V1)):
-        tmp_plt1 = V1[vert]
-        tmp_plt2 = V2[vert]
-        tmp_plt3 = V3[vert]
-        plt = plot(tmp_plt1, tmp_plt2, tmp_plt3)
+    plt = plot(normals,vertexes)
     plt.show()
