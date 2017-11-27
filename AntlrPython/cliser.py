@@ -9,7 +9,6 @@ import clisergenerator
 tokens = cliserlex.tokens
 token_types = cliserlex.token_types
 numbers = cliserlex.numbers
-dec_numbers = clisergenerator.dec_numbers
 
 def open_file(filename):
     f = open(filename, "r")

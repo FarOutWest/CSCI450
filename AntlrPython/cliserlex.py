@@ -4,14 +4,11 @@ import re
 tokens = []
 token_types = []
 numbers = []
-dec_numbers = []
 
 def lex(filecontents):
     token = ""
     for line in filecontents:
-        #print("LINE: ", line)
         for word in line:
-            #print("WORD: ", word)
             token += word
             if "facet" == token.lower():
                 token += " "
@@ -42,7 +39,4 @@ def lex(filecontents):
                 token_types.append("END FACET")
                 tokens.append(token)
                 token = ""
-    #print("TOKENS = ", tokens,'\n')
-    #print("TOKEN_TYPES = ", token_types, '\n')
-    #print("NUMBERS = ", numbers, '\n')
     return tokens

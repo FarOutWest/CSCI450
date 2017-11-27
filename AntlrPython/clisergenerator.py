@@ -5,9 +5,7 @@ from mpl_toolkits.mplot3d import axes3d
 import matplotlib.pyplot as plt
 from matplotlib import cm
 import cliserlex
-
 numbers = cliserlex.numbers
-dec_numbers = []
 
 def generate_slices():
     splits = [numbers[x:x+3] for x in range(0, len(numbers),3)]
@@ -29,11 +27,6 @@ def generate_slices():
             vertecies.append(splits[i])
             vertex_count += 1
 
-    #print("\nNUMBERS: ", numbers)
-    #print("\nSPLITS: ", splits)
-    #print("\nNORMALS: ", normals)
-    #print("\nVERTECIES: ", vertecies,'\n')
-
     for verts in vertecies:
         counter = 0
         for values in verts:
@@ -41,7 +34,7 @@ def generate_slices():
                 _vertecies.append('[')
                 _vertecies.append(values)
                 _vertecies.append(',')
-            if counter == 0:
+            if counter == 1:
                 _vertecies.append(values)
                 _vertecies.append(',')
             if counter == 2:
@@ -67,13 +60,10 @@ def generate_slices():
         num += 1
         number += 1
 
-
-    #print("\nVERTECIES: ", _vertecies,'\n')
-    #print("\nTriangles: ", _triangles)
-
     print(vertex_count,"Vertecies Found")
     print(normal_count,"Normals Found")
 
+    filename = "slices"
     poly = "polyhedron(\r\npoints=["
     for vert in _vertecies:
         poly += vert
@@ -83,7 +73,11 @@ def generate_slices():
     poly += "]);"
     module = "module object(scale) {"
     module = module + poly + "}\r\n\r\n"
-    module = module + "object(1);"
-    scad_object = open("object.scad", 'w')
+    module = module + "r = 200;\ndr = 5;\nmodule slice(dr=dr){\nfor(i=[-r:dr:r]){\ntranslate([0,0,i])linear_extrude(1)translate([0,0,i*r])projection(cut=true)translate([0,0,-i])children();\n}\n}"
+    module = module + "\n\nslice()object(1);"
+    filename.replace(" ", "")
+    filename = filename + ".scad"
+    scad_object = open(filename, 'w')
     scad_object.write(module)
     scad_object.close()
+    print("Filename: ", filename)
