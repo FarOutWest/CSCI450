@@ -16,6 +16,7 @@ a[:,3:6] = np.roll( a[:,0:3], -1, axis=0)
 a[:,8] = np.ones_like(phi[:-1])
 a = np.around(a, 2)
 
+
 fig = plt.figure()
 ax = fig.add_subplot(111, projection='3d')
 fc = ["crimson" if i%2 else "gold" for i in range(a.shape[0])]
