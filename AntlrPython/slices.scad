@@ -10,4 +10,4 @@ translate([0,0,i])linear_extrude(1)translate([0,0,i*r])projection(cut=true)trans
 }
 }
 
-slice()object(1);
+slice()rotate([90,0,0])object(1);
